@@ -1,7 +1,8 @@
 import { useLocation } from "react-router-dom";
 import CommonBanner from "../../components/CommonBanner/CommonBanner";
 import { useEffect, useState } from "react";
-import AllBooksCard from "./AllBooksCard/AllBooksCard";
+import AllBooksCard from "./AllBooksCard";
+import loadingImg from '../../assets/images/loader-animation.gif'
 
 const books =
     [
@@ -188,29 +189,51 @@ const booksTypes = [
 const AllCategoryBook = () => {
 
     const location = useLocation();
+
+    // for common banner title 
     const pathName = `home${location.pathname}`
     let title = location.pathname == '/allBook' ? "Explore our all books" : pathName;
 
-    const a = 'a';
+    const [loading, setLoading] = useState(true)
 
-    const [category, setCategory] = useState('all')
+    // filter and all data get by send query
+
+    const [allBooks, setAllBooks] = useState(null)
+
+    // for select categories filter
     const handleSelectOption = (e) => {
         console.log(e.target.value);
-        setCategory(e.target.value)
-    }
+        setLoading(true)
 
-    const [booksItem, setBooks] = useState();
-
-    useEffect(() => {
-        fetch('')
+        const category = e.target?.value.toLowerCase();
+        console.log('select', category);
+        fetch(`http://localhost:5000/allBooks?category=${category}`)
             .then(res => res.json())
             .then(data => {
-                console.log(data);
+                // console.log(data);
+                setAllBooks(data)
+                setLoading(false)
             })
             .catch(err => {
                 console.log(err);
             })
-    }, [])  
+    }
+
+    useEffect(() => {
+        setLoading(true)
+        const category = location.pathname == '/allBook' ? '' : location.pathname.split('/')[2];
+        console.log('cat', category);
+        fetch(`http://localhost:5000/allBooks?category=${category}`)
+            .then(res => res.json())
+            .then(data => {
+                // console.log(data);
+                setAllBooks(data)
+                setLoading(false)
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }, [location.pathname])
 
 
     return (
@@ -223,13 +246,13 @@ const AllCategoryBook = () => {
                     location.pathname == '/allBook' && <>
                         <select
                             onChange={handleSelectOption}
-                            defaultValue={''}
+                            defaultValue={'default'}
                             className="select select-bordered border-bg-primary w-full max-w-xs focus:outline-none focus:border-bg-secondary">
-                            <option value='' disabled selected className="font-bold">Select Books Category</option>
-                            <option value='all'>All Category</option>
+                            <option value='default' disabled selected className="font-bold">Select Books Category</option>
+                            <option value=''>All Category</option>
                             {
                                 booksTypes.map(book => (
-                                    <option key={book.id} className="mt-4">{book.title}</option>
+                                    <option key={book.id} className="mt-4 capitalize">{book.title}</option>
                                 ))
                             }
                         </select>
@@ -239,8 +262,17 @@ const AllCategoryBook = () => {
             <div className="w-[90%] mx-auto flex flex-wrap justify-center items-center gap-6 mt-16">
 
                 {
-                    books?.map(book => <AllBooksCard key={book.name} book={book} path={location?.pathname} />)
+                    loading ?
+
+                        <div>
+                            <span className="loading loading-spinner loading-lg"></span>
+                        </div>
+
+                        :
+
+                        allBooks?.map(book => <AllBooksCard key={book.name} book={book} path={location?.pathname} />)
                 }
+
             </div>
 
 

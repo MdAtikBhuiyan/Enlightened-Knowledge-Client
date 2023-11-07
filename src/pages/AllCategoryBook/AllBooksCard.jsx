@@ -3,7 +3,9 @@ import Rating from "react-rating";
 import { Link } from "react-router-dom";
 
 const AllBooksCard = ({ book, path }) => {
+
     // console.log(path);
+
     return (
         <div className="border border-gray-200 shadow">
             <div className="max-w-[240px] max-h-[250px] overflow-hidden mx-auto mb-4">
@@ -29,12 +31,15 @@ const AllBooksCard = ({ book, path }) => {
 
                 {
                     path == '/allBook' ?
-                        <Link to={`/category/${book?.category}/${book?.name}`}>
-                            <button className="btn bg-bg-primary text-white border-0 h-fit min-h-fit px-4 py-2 font-bold text-sm hover:bg-[#58932d] capitalize">Update</button>
+                        <Link to={`/updateBook`} state={book}>
+                            <button
+                                className="btn bg-bg-primary text-white border-0 h-fit min-h-fit px-4 py-2 font-bold text-sm hover:bg-[#58932d] capitalize">Update</button>
                         </Link>
                         :
                         <Link to={`/category/${book?.category}/${book?.name}`}>
-                            <button className="btn bg-bg-primary text-white border-0 h-fit min-h-fit px-4 py-2 font-bold text-sm hover:bg-[#58932d] capitalize">Details</button>
+                            <button
+
+                                className="btn bg-bg-primary text-white border-0 h-fit min-h-fit px-4 py-2 font-bold text-sm hover:bg-[#58932d] capitalize">Details</button>
                         </Link>
                 }
             </div>
