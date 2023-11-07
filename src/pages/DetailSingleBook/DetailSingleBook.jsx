@@ -1,8 +1,9 @@
-import { useContext, useRef } from "react";
+import { useContext, useRef, useState } from "react";
 import { FaRegStar, FaStar } from "react-icons/fa";
 import Rating from "react-rating";
 import { useLoaderData } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProvider";
+import Swal from "sweetalert2";
 
 const DetailSingleBook = () => {
     const book = useLoaderData()
@@ -22,6 +23,12 @@ const DetailSingleBook = () => {
     // Create the date string in "YYYY-MM-DD" format
     const formattedDate = `${year}-${month}-${day}`;
 
+
+    // handle book quanity 
+    const [bookQuantity, setBookQuantity] = useState(parseInt(book?.quantity))
+
+    // console.log("qqq", typeof bookQuantity, bookQuantity);
+
     const handleBookRequirung = (e) => {
         e.preventDefault()
         const form = e.target;
@@ -30,9 +37,61 @@ const DetailSingleBook = () => {
         const borrow_date = form.borrow_date.value;
         const return_date = form.return_date.value;
 
-        const data = { userName, userEmail, borrow_date, return_date }
+        const borrowData = { userName, userEmail, borrow_date, return_date, bookId: book?._id }
 
-        console.log(data);
+        // console.log(data);
+
+        fetch(`http://localhost:5000/borrowBook`, {
+            method: "POST",
+            headers: {
+                "content-type": "application/json"
+            },
+            body: JSON.stringify(borrowData)
+        })
+            .then(res => res.json())
+            .then(data => {
+                // console.log(data);
+                if (data.insertedId) {
+
+                    // book quantity decrease
+                    const remaining = bookQuantity - 1;
+                    fetch(`http://localhost:5000/updateBookQuantity/${book?._id}`, {
+                        method: 'PATCH',
+                        headers: {
+                            "content-type": "application/json"
+                        },
+                        body: JSON.stringify({ remaining })
+                    })
+                        .then(res => res.json())
+                        .then(data => {
+                            console.log("decrease", data);
+                            setBookQuantity(remaining)
+                        })
+
+
+                    // showing message
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Book borrowing successfully',
+                        text: "Do you want to continue",
+                        confirmButtonText: "Yes"
+                        // showConfirmButton: false,
+                        // timer: 2000
+                    })
+                }
+                // form clear
+                // form.reset()
+            })
+            .catch(err => {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Opps... Failed !!',
+                    text: `${err.message}`,
+                    confirmButtonText: "Continue"
+                    // showConfirmButton: false,
+                    // timer: 2000
+                })
+            })
 
         if (modalRef.current) {
             modalRef.current.close();
@@ -54,7 +113,7 @@ const DetailSingleBook = () => {
                             <p className="mt-2 text-xl font-black text-title-primary">Author: {book?.author}</p>
                             {/* <span className="ml-2 text-xs uppercase">258 Sales</span> */}
                         </div>
-                        <p className="mt-2 text-md text-title-primary">Available: {book?.quantity} pieces </p>
+                        <p className="mt-2 text-md text-title-primary">Available: {bookQuantity} pieces </p>
                         <p className="mt-6 mb-4 font-sans text-base tracking-normal text-title-primary">{book?.description.slice(0, 300)}...</p>
 
                         <Rating
@@ -71,6 +130,7 @@ const DetailSingleBook = () => {
                             <button
                                 // onClick={() => document.getElementById('my_modal_5').showModal()}
                                 onClick={() => modalRef.current.showModal()}
+                                disabled={bookQuantity == 0}
                                 className="btn bg-bg-secondary text-white border-0 h-fit min-h-fit px-4 py-2 md:px-6 md:py-2 font-bold text-base  capitalize hover:bg-[#ff6137]">Borrowed</button>
                         </div>
                     </div>
