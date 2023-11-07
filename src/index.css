@@ -1,0 +1,92 @@
+/* fonts */
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap');
+
+/* tailwind css add */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+/* font style */
+
+.font-title {
+    font-family: 'Work Sans', sans-serif;
+}
+
+body {
+    font-family: 'Open Sans', sans-serif;
+}
+
+/* dark mode light mode */
+
+[data-theme='light'] {
+    --text-primary: #484848;
+    --text-secondary: #666;
+
+    --bg-theme: #fff;
+    --bg-primary: #77b748;
+    --bg-secondary: #f16945;
+
+    --bg-navbar: #fff;
+}
+
+[data-theme='dark'] {
+    --text-primary: #fff;
+    --text-secondary: #fff;
+
+    --bg-theme: #000;
+
+    --bg-primary: #77b748;
+    --bg-secondary: #f16945;
+
+    --bg-navbar: #fff;
+}
+
+/* navbar */
+.navbar li a {
+    border-bottom: 2px solid transparent;
+    transition: all .3s;
+}
+
+.navbar li a:hover {
+    color: #000;
+    border-bottom: 2px solid #000;
+    /* color: #77b748;
+    border-bottom: 2px solid #77b748; */
+}
+
+.navbar li a.active {
+    color: #000;
+    font-weight: bold;
+    border-bottom: 2px solid #000;
+}
+
+/* swiper slide */
+
+.swiper-button-prev:after,
+.swiper-button-next:after {
+    font-size: 22px !important;
+    font-weight: bold;
+    color: #77b748;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+    /* position: absolute;
+    top: 95% !important; */
+    background: rgb(248, 245, 245);
+    width: 40px !important;
+    height: 40px !important;
+    border-radius: 100%;
+
+}
+
+/* .swiper-button-next{
+    right: 50% !important;
+    margin-right: 25px;
+}
+.swiper-button-prev{
+    left: 50% !important;
+    margin-left: 25px;
+} */
