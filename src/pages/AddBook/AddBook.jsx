@@ -10,7 +10,7 @@ const AddBook = () => {
     const updateProduct = state ? state : '';
     console.log("object", updateProduct);
 
-    const handleUpdateProduct = ''
+
     const handleAddProduct = (e) => {
         e.preventDefault();
 
@@ -24,7 +24,7 @@ const AddBook = () => {
         const description = form.description.value;
 
         const addData = { img, name, quantity, author, category, rating, description }
-        console.log(addData);
+        // console.log(addData);
 
         fetch(`http://localhost:5000/addBooks`, {
             method: "POST",
@@ -46,13 +46,60 @@ const AddBook = () => {
                         // timer: 2000
                     })
                 }
+                // form clear
+                // form.reset()
             })
             .catch(err => {
-                console.log(err);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Opps... Failed !!',
+                    text: `${err.message}`,
+                    confirmButtonText: "Continue"
+                    // showConfirmButton: false,
+                    // timer: 2000
+                })
             })
 
     }
 
+    // update book info
+    const handleUpdateProduct = (e) => {
+        e.preventDefault();
+
+        const form = e.target;
+        const img = form.img.value;
+        const name = form.name.value;
+        const quantity = form.quantity.value;
+        const author = form.author.value;
+        const category = form.category.value;
+        const rating = form.rating.value;
+        const description = form.description.value;
+
+        const updateInfo = { img, name, quantity, author, category, rating, description };
+
+        fetch('http://localhost:5000/updateBook', {
+            method: "PUT",
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(updateInfo)
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+            })
+            .catch(err => {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Opps... Failed !!',
+                    text: `${err.message}`,
+                    confirmButtonText: "Continue"
+                    // showConfirmButton: false,
+                    // timer: 2000
+                })
+            })
+
+    }
 
     return (
         <div className='w-[90%] mx-auto mt-16'>
@@ -75,7 +122,7 @@ const AddBook = () => {
                             </label>
                             <input
                                 name="img"
-                                // defaultValue={image}
+                                defaultValue={updateProduct?.img}
                                 required
                                 type="text"
                                 placeholder="Image URl"
@@ -90,7 +137,7 @@ const AddBook = () => {
                                 <input
                                     name="name"
                                     type="text"
-                                    // defaultValue={title}
+                                    defaultValue={updateProduct?.name}
                                     required
                                     placeholder="Book Name"
                                     className="border-[#E9EDF4] w-full border bg-[#FCFDFE] py-2 px-4 text-base text-body-color placeholder-[#8c8c8d] outline-none focus:border-red-300"
@@ -104,7 +151,7 @@ const AddBook = () => {
                                     name="quantity"
                                     type="number"
                                     required
-                                    // defaultValue={price}
+                                    defaultValue={updateProduct?.quantity}
                                     placeholder="Quantity"
                                     className="border-[#E9EDF4] w-full border bg-[#FCFDFE] py-2 px-4 text-base text-body-color placeholder-[#8c8c8d] outline-none focus:border-red-300"
                                 />
@@ -117,7 +164,7 @@ const AddBook = () => {
                                     name="author"
                                     type="text"
                                     required
-                                    // defaultValue={brandName}
+                                    defaultValue={updateProduct?.author}
                                     placeholder="Author Name"
                                     className="border-[#E9EDF4] w-full border bg-[#FCFDFE] py-2 px-4 text-base text-body-color placeholder-[#8c8c8d] outline-none focus:border-red-300"
                                 />
@@ -130,7 +177,7 @@ const AddBook = () => {
                                     name="category"
                                     type="text"
                                     required
-                                    // defaultValue={type}
+                                    defaultValue={updateProduct?.category}
                                     placeholder="Book Category"
                                     className="border-[#E9EDF4] w-full border bg-[#FCFDFE] py-2 px-4 text-base text-body-color placeholder-[#8c8c8d] outline-none focus:border-red-300"
                                 />
@@ -144,7 +191,7 @@ const AddBook = () => {
                                     name="description"
                                     type="text"
                                     required
-                                    // defaultValue={details}
+                                    defaultValue={updateProduct?.description}
                                     placeholder="Details"
                                     className="border-[#E9EDF4] w-full border bg-[#FCFDFE] py-2 px-4 text-base text-body-color placeholder-[#8c8c8d] outline-none focus:border-red-300"
                                 />
@@ -157,7 +204,7 @@ const AddBook = () => {
                                     name="rating"
                                     type="text"
                                     required
-                                    // defaultValue={rating}
+                                    defaultValue={updateProduct?.rating}
                                     placeholder="rating"
                                     className="border-[#E9EDF4] w-full border bg-[#FCFDFE] py-2 px-4 text-base text-body-color placeholder-[#8c8c8d] outline-none focus:border-red-300"
                                 />
