@@ -36,7 +36,7 @@ const AllBooksCard = ({ book, path }) => {
                                 className="btn bg-bg-primary text-white border-0 h-fit min-h-fit px-4 py-2 font-bold text-sm hover:bg-[#58932d] capitalize">Update</button>
                         </Link>
                         :
-                        <Link to={`/category/${book?.category}/${book?.name}`}>
+                        <Link to={`/category/${book?.category}/${book?._id}`}>
                             <button
 
                                 className="btn bg-bg-primary text-white border-0 h-fit min-h-fit px-4 py-2 font-bold text-sm hover:bg-[#58932d] capitalize">Details</button>

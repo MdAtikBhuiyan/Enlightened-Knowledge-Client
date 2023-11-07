@@ -31,12 +31,12 @@ const Navbar = () => {
                 toast.success("Log out successfull")
             })
             .catch(err => {
-                toast.error("Logout failed")
+                toast.error("Logout failed", err.message)
             })
     }
 
     return (
-        <div className="sticky top-0 z-20 bg-bg-secondary ">
+        <div className="sticky top-0 z-20 bg-[#3d7e34] ">
             <div className="navbar items-center w-[80%] mx-auto">
                 <div className="navbar-start">
                     <div className="dropdown">
@@ -73,8 +73,8 @@ const Navbar = () => {
                                         <p>{user?.displayName}</p>
                                         <p className="text-xs mb-4">{user?.email}</p>
                                         <button
-                                        onClick={handleLogout} 
-                                        className="btn bg-bg-primary text-white border-0 h-fit min-h-fit px-4 py-2 md:px-6 md:py-2 text-sm hover:bg-[#58932d] capitalize">logout</button>
+                                            onClick={handleLogout}
+                                            className="btn bg-bg-primary text-white border-0 h-fit min-h-fit px-4 py-2 md:px-6 md:py-2 text-sm hover:bg-[#58932d] capitalize">logout</button>
                                     </div>
                                 </ul>
                             </div>

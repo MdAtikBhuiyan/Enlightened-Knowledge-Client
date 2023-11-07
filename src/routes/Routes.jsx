@@ -6,6 +6,7 @@ import Home from "../pages/Home/Home";
 import Register from "../pages/Register/Register";
 import AllCategoryBook from "../pages/AllCategoryBook/AllCategoryBook";
 import AddBook from "../pages/AddBook/AddBook";
+import DetailSingleBook from "../pages/DetailSingleBook/DetailSingleBook";
 
 const router = createBrowserRouter([
     {
@@ -41,6 +42,11 @@ const router = createBrowserRouter([
                 path: '/updateBook',
                 element: <AddBook />
             },
+            {
+                path: '/category/:book/:id',
+                element: <DetailSingleBook />,
+                loader: ({ params }) => fetch(`http://localhost:5000/singleBook/${params.id}`)
+            }
         ]
     },
 ]);
