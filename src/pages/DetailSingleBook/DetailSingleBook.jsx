@@ -64,10 +64,11 @@ const DetailSingleBook = () => {
                     })
                         .then(res => res.json())
                         .then(data => {
-                            console.log("decrease", data);
-                            setBookQuantity(remaining)
+                            // console.log("decrease", data);
+                            if (data.modifiedCount > 0) {
+                                setBookQuantity(remaining)
+                            }
                         })
-
 
                     // showing message
                     Swal.fire({
@@ -79,8 +80,7 @@ const DetailSingleBook = () => {
                         // timer: 2000
                     })
                 }
-                // form clear
-                // form.reset()
+
             })
             .catch(err => {
                 Swal.fire({
@@ -97,6 +97,9 @@ const DetailSingleBook = () => {
             modalRef.current.close();
         }
 
+        // clear return date field
+        form.return_date.value = ''
+
     }
     return (
 
@@ -107,7 +110,7 @@ const DetailSingleBook = () => {
                     <div className="relative p-8 md:w-4/6">
                         <div className="flex flex-col md:flex-row">
                             <h2 className="mb-2 text-4xl font-title font-black text-title-primary">{book?.name}</h2>
-                            <span className="ml-2 text-xs uppercase text-title-secondary">{book?.category}</span>
+                            <span className="ml-2 text-sm uppercase text-title-secondary">{book?.category}</span>
                         </div>
                         <div className="flex flex-col md:flex-row md:items-end">
                             <p className="mt-2 text-xl font-black text-title-primary">Author: {book?.author}</p>
