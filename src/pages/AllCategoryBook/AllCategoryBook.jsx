@@ -222,7 +222,7 @@ const AllCategoryBook = () => {
     useEffect(() => {
         setLoading(true)
         const category = location.pathname == '/allBook' ? '' : location.pathname.split('/')[2];
-        console.log('cat', category);
+        // console.log('cat', category);
         fetch(`http://localhost:5000/allBooks?category=${category}`)
             .then(res => res.json())
             .then(data => {
@@ -270,7 +270,7 @@ const AllCategoryBook = () => {
 
                         :
 
-                        allBooks?.map(book => <AllBooksCard key={book.name} book={book} path={location?.pathname} />)
+                        allBooks?.map(book => <AllBooksCard key={book._id} book={book} path={location?.pathname} />)
                 }
 
             </div>

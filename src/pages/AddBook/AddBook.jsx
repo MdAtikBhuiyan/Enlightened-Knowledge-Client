@@ -2,12 +2,17 @@
 import { useLocation } from 'react-router-dom';
 import logo from '../../assets/images/logo.png';
 import Swal from 'sweetalert2';
+import { useEffect, useState } from 'react';
+import addImg from '../../assets/images/addData.png'
 
 const AddBook = () => {
 
     const { state } = useLocation()
 
-    const updateProduct = state ? state : '';
+    const [updateProduct, setUpdateProduct] = useState(null)
+    useEffect(() => {
+        setUpdateProduct(state)
+    }, [state])
     console.log("object", updateProduct);
 
 
@@ -39,7 +44,7 @@ const AddBook = () => {
                 if (data.insertedId) {
                     Swal.fire({
                         icon: 'success',
-                        title: 'Product added successfully',
+                        title: 'Book added successfully',
                         text: "Do you want to continue",
                         confirmButtonText: "Yes"
                         // showConfirmButton: false,
@@ -77,7 +82,7 @@ const AddBook = () => {
 
         const updateInfo = { img, name, quantity, author, category, rating, description };
 
-        fetch('http://localhost:5000/updateBook', {
+        fetch(`http://localhost:5000/updateBook/${updateProduct._id}`, {
             method: "PUT",
             headers: {
                 'content-type': 'application/json'
@@ -86,7 +91,16 @@ const AddBook = () => {
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data);
+                if (data.modifiedCount) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Book updated successfully',
+                        text: "Do you want to continue",
+                        confirmButtonText: "Yes"
+                        // showConfirmButton: false,
+                        // timer: 2000
+                    })
+                }
             })
             .catch(err => {
                 Swal.fire({
@@ -103,9 +117,9 @@ const AddBook = () => {
 
     return (
         <div className='w-[90%] mx-auto mt-16'>
-            <div className="grid md:grid-cols-1 lg:grid-cols-2 gap-2 items-center justify-center">
+            <div className="grid md:grid-cols-1 lg:grid-cols-2 gap-8 items-center justify-center">
                 <div className={`justify-self-center ${updateProduct && 'order-2'}`}>
-                    {/* <img src={addImg} alt="" /> */}
+                    <img src={addImg} className='w-full h-full' alt="" />
                 </div>
                 <section className={`p-4 py-8 md:py-16 md:px-16 shadow-md ${updateProduct ? 'bg-bg-secondary' : 'bg-bg-primary'}`}>
                     <img src={logo} className='w-1/6 mx-auto mb-8' alt="" />
