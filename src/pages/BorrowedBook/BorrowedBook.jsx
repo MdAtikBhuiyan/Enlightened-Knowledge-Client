@@ -13,7 +13,7 @@ const BorrowedBook = () => {
         fetch(`http://localhost:5000/borrowBook?email=${user?.email}`)
             .then(res => res.json())
             .then(data => {
-                console.log(data);
+                // console.log(data);
                 setBorrowedBooks(data)
             })
             .catch(err => {

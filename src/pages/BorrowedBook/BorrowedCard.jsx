@@ -14,7 +14,7 @@ const BorrowedCard = ({ book, borrowedBooks, setBorrowedBooks }) => {
         fetch(`http://localhost:5000/singleBook/${book?.bookId}`)
             .then(res => res.json())
             .then(data => {
-                console.log("data single", data);
+                // console.log("data single", data);
                 setQuantityBook(data)
             })
             .catch(err => {
@@ -51,7 +51,7 @@ const BorrowedCard = ({ book, borrowedBooks, setBorrowedBooks }) => {
                     })
                         .then(res => res.json())
                         .then(data => {
-                            console.log('delete data', data);
+                            // console.log('delete data', data);
                             const remainingBooks = borrowedBooks?.filter(book => book._id != _id)
                             setBorrowedBooks(remainingBooks)
                         })

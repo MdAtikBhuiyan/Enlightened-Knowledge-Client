@@ -1,11 +1,14 @@
-import { useContext, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { FaRegStar, FaStar } from "react-icons/fa";
 import Rating from "react-rating";
 import { Link, useLoaderData } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProvider";
 import Swal from "sweetalert2";
+import { data } from "autoprefixer";
 
 const DetailSingleBook = () => {
+
+    // get single book for show detaild
     const book = useLoaderData()
     // console.log('single', book);
     const { _id, ...restInfo } = book;
@@ -29,6 +32,24 @@ const DetailSingleBook = () => {
 
     // console.log("qqq", typeof bookQuantity, bookQuantity);
 
+    const [alreayBorrowed, setAlreadyBorrowed] = useState(null)
+    useEffect(() => {
+        fetch(`http://localhost:5000/borrowBook?email=${user?.email}`)
+            .then(res => res.json())
+            .then(data => {
+                console.log("already boroo", data);
+                setAlreadyBorrowed(data)
+            })
+
+
+    }, [user?.email, bookQuantity])
+    // console.log("set already borroed", alreayBorrowed);
+
+    useEffect(() => {
+        const is_exist = alreayBorrowed?.find(book => book.bookId == _id)
+        console.log("is_exist", is_exist);
+    }, [_id, alreayBorrowed])
+
     const handleBookRequirung = (e) => {
         e.preventDefault()
         const form = e.target;
@@ -37,61 +58,79 @@ const DetailSingleBook = () => {
         const borrow_date = form.borrow_date.value;
         const return_date = form.return_date.value;
 
+        // without mongodb _id
         const borrowData = { userName, userEmail, borrow_date, return_date, bookId: book?._id, ...restInfo }
 
         // console.log(data);
 
-        fetch(`http://localhost:5000/borrowBook`, {
-            method: "POST",
-            headers: {
-                "content-type": "application/json"
-            },
-            body: JSON.stringify(borrowData)
-        })
-            .then(res => res.json())
-            .then(data => {
-                // console.log(data);
-                if (data.insertedId) {
+        // if same borrowed book already exist for this user then doesn't borrowed
 
-                    // book quantity decrease
-                    const remaining = bookQuantity - 1;
-                    fetch(`http://localhost:5000/updateBookQuantity/${book?._id}`, {
-                        method: 'PATCH',
-                        headers: {
-                            "content-type": "application/json"
-                        },
-                        body: JSON.stringify({ remaining })
-                    })
-                        .then(res => res.json())
-                        .then(data => {
-                            // console.log("decrease", data);
-                            if (data.modifiedCount > 0) {
-                                setBookQuantity(remaining)
-                            }
+        const is_exist = alreayBorrowed?.find(book => book.bookId == _id)
+        if (is_exist) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Opps... Failed !!',
+                text: `Same Book already borrowed`,
+                confirmButtonText: "Continue"
+                // showConfirmButton: false,
+                // timer: 2000
+            })
+        }
+        else {
+
+            fetch(`http://localhost:5000/borrowBook`, {
+                method: "POST",
+                headers: {
+                    "content-type": "application/json"
+                },
+                body: JSON.stringify(borrowData)
+            })
+                .then(res => res.json())
+                .then(data => {
+                    // console.log(data);
+                    if (data.insertedId) {
+
+                        // book quantity decrease
+                        const remaining = bookQuantity - 1;
+                        fetch(`http://localhost:5000/updateBookQuantity/${book?._id}`, {
+                            method: 'PATCH',
+                            headers: {
+                                "content-type": "application/json"
+                            },
+                            body: JSON.stringify({ remaining })
                         })
+                            .then(res => res.json())
+                            .then(data => {
+                                // console.log("decrease", data);
+                                if (data.modifiedCount > 0) {
+                                    setBookQuantity(remaining)
+                                }
+                            })
 
-                    // showing message
+                        // showing message
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Book borrowing successfully',
+                            text: "Do you want to continue",
+                            confirmButtonText: "Yes"
+                            // showConfirmButton: false,
+                            // timer: 2000
+                        })
+                    }
+
+                })
+                .catch(err => {
                     Swal.fire({
-                        icon: 'success',
-                        title: 'Book borrowing successfully',
-                        text: "Do you want to continue",
-                        confirmButtonText: "Yes"
+                        icon: 'error',
+                        title: 'Opps... Failed !!',
+                        text: `${err.message}`,
+                        confirmButtonText: "Continue"
                         // showConfirmButton: false,
                         // timer: 2000
                     })
-                }
-
-            })
-            .catch(err => {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Opps... Failed !!',
-                    text: `${err.message}`,
-                    confirmButtonText: "Continue"
-                    // showConfirmButton: false,
-                    // timer: 2000
                 })
-            })
+
+        }
 
         if (modalRef.current) {
             modalRef.current.close();

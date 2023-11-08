@@ -118,7 +118,7 @@ const BookCategory = () => {
 
     const navigate = useNavigate()
     const handleCategoryClick = (data) => {
-        console.log(data);
+        // console.log(data);
         navigate(`/category/${data.category.toLowerCase()}`, { state: data })
     }
 
