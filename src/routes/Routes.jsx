@@ -9,6 +9,7 @@ import AddBook from "../pages/AddBook/AddBook";
 import DetailSingleBook from "../pages/DetailSingleBook/DetailSingleBook";
 import BorrowedBook from "../pages/BorrowedBook/BorrowedBook";
 import ReadBook from "../pages/ReadBook/ReadBook";
+import PrivateRoute from "./PrivateRoute";
 
 const router = createBrowserRouter([
     {
@@ -34,28 +35,40 @@ const router = createBrowserRouter([
             },
             {
                 path: '/allBook',
-                element: <AllCategoryBook />
+                element: <PrivateRoute>
+                    <AllCategoryBook />
+                </PrivateRoute>
             },
             {
                 path: '/addBook',
-                element: <AddBook />
+                element: <PrivateRoute>
+                    <AddBook />
+                </PrivateRoute>
             },
             {
                 path: '/updateBook',
-                element: <AddBook />
+                element: <PrivateRoute>
+                    <AddBook />
+                </PrivateRoute>
             },
             {
                 path: '/category/:book/:id',
-                element: <DetailSingleBook />,
+                element: <PrivateRoute>
+                    <DetailSingleBook />
+                </PrivateRoute>,
                 loader: ({ params }) => fetch(`http://localhost:5000/singleBook/${params.id}`)
             },
             {
                 path: '/borrowedBook',
-                element: <BorrowedBook />
+                element: <PrivateRoute>
+                    <BorrowedBook />
+                </PrivateRoute>
             },
             {
                 path: '/readBook',
-                element: <ReadBook />
+                element: <PrivateRoute>
+                    <ReadBook />
+                </PrivateRoute>
             }
         ]
     },

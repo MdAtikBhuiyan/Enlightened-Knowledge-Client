@@ -47,6 +47,8 @@ const Register = () => {
                     })
                         .then(() => {
                             navigate('/');
+                            // for showing user updated photo instantly
+                            location.reload();
                         })
                         .catch(err => {
                             console.log(err);

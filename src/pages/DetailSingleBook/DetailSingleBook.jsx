@@ -37,7 +37,7 @@ const DetailSingleBook = () => {
         fetch(`http://localhost:5000/borrowBook?email=${user?.email}`)
             .then(res => res.json())
             .then(data => {
-                console.log("already boroo", data);
+                // console.log("already boroo", data);
                 setAlreadyBorrowed(data)
             })
 
@@ -45,10 +45,10 @@ const DetailSingleBook = () => {
     }, [user?.email, bookQuantity])
     // console.log("set already borroed", alreayBorrowed);
 
-    useEffect(() => {
-        const is_exist = alreayBorrowed?.find(book => book.bookId == _id)
-        console.log("is_exist", is_exist);
-    }, [_id, alreayBorrowed])
+    // useEffect(() => {
+    //     const is_exist = alreayBorrowed?.find(book => book.bookId == _id)
+    //     console.log("is_exist", is_exist);
+    // }, [_id, alreayBorrowed])
 
     const handleBookRequirung = (e) => {
         e.preventDefault()

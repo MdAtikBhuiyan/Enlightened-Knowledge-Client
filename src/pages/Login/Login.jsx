@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import logo from '../../assets/images/logo.png'
 import { AuthContext } from "../../providers/AuthProvider";
@@ -9,7 +9,9 @@ const Login = () => {
 
     const { logIn, googleSignIn } = useContext(AuthContext)
     const [errorMessage, setErrorMessage] = useState();
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const { state } = useLocation()
+    console.log("stated data", state);
 
     const handleLogin = (e) => {
 
@@ -27,7 +29,7 @@ const Login = () => {
                 .then(res => {
                     // console.log(res.user);
                     toast.success("Login successfully")
-                    navigate('/')
+                    navigate(state ? state : '/')
                 })
                 .catch(err => {
                     setErrorMessage(err.message)
@@ -45,7 +47,7 @@ const Login = () => {
             .then(res => {
                 // console.log(res.user);
                 toast.success("Login successfully")
-                navigate('/')
+                navigate(state ? state : '/')
             })
             .catch(err => {
                 setErrorMessage(err.message)
