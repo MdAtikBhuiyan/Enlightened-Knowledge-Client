@@ -52,7 +52,7 @@ const AddBook = () => {
                     })
                 }
                 // form clear
-                // form.reset()
+                form.reset()
             })
             .catch(err => {
                 Swal.fire({
