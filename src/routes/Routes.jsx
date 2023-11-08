@@ -10,6 +10,7 @@ import DetailSingleBook from "../pages/DetailSingleBook/DetailSingleBook";
 import BorrowedBook from "../pages/BorrowedBook/BorrowedBook";
 import ReadBook from "../pages/ReadBook/ReadBook";
 import PrivateRoute from "./PrivateRoute";
+import Review from "../pages/Home/Review/Review";
 
 const router = createBrowserRouter([
     {
@@ -69,6 +70,10 @@ const router = createBrowserRouter([
                 element: <PrivateRoute>
                     <ReadBook />
                 </PrivateRoute>
+            },
+            {
+                path: '/review',
+                element: <Review />
             }
         ]
     },

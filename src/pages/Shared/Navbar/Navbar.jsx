@@ -13,15 +13,26 @@ const Navbar = () => {
         <li>
             <NavLink to='/'>Home</NavLink>
         </li>
-        <li>
-            <NavLink to='/addBook'>Add Book</NavLink>
-        </li>
+
+        {
+            user &&
+            <li>
+                <NavLink to='/addBook'>Add Book</NavLink>
+            </li>
+        }
         <li>
             <NavLink to='/allBook'>All Book</NavLink>
         </li>
+        {user &&
+            <li>
+                <NavLink to='/borrowedBook'>Borrowed Book</NavLink>
+            </li>
+        }
+
         <li>
-            <NavLink to='/borrowedBook'>Borrowed Book</NavLink>
+            <NavLink to='/review'>User Review</NavLink>
         </li>
+
 
     </>
 

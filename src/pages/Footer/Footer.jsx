@@ -1,19 +1,33 @@
+import { useContext } from "react";
 import { NavLink } from "react-router-dom";
+import { AuthContext } from "../../providers/AuthProvider";
 
 const Footer = () => {
+
+    const { user } = useContext(AuthContext)
 
     const navLinks = <>
         <li>
             <NavLink to='/'>Home</NavLink>
         </li>
-        <li>
-            <NavLink to='/addBook'>Add Book</NavLink>
-        </li>
+
+        {
+            user &&
+            <li>
+                <NavLink to='/addBook'>Add Book</NavLink>
+            </li>
+        }
         <li>
             <NavLink to='/allBook'>All Book</NavLink>
         </li>
+        {user &&
+            <li>
+                <NavLink to='/borrowedBook'>Borrowed Book</NavLink>
+            </li>
+        }
+
         <li>
-            <NavLink to='/borrowedBook'>Borrowed Book</NavLink>
+            <NavLink to='/review'>User Review</NavLink>
         </li>
 
     </>

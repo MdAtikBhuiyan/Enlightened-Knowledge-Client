@@ -7,6 +7,8 @@ const BorrowedBook = () => {
 
     const { user } = useContext(AuthContext);
 
+    const [loading, setLoading] = useState(true)
+
     const [borrowedBooks, setBorrowedBooks] = useState(null)
 
     useEffect(() => {
@@ -15,6 +17,7 @@ const BorrowedBook = () => {
             .then(data => {
                 // console.log(data);
                 setBorrowedBooks(data)
+                setLoading(false)
             })
             .catch(err => {
                 console.log(err);
@@ -26,25 +29,31 @@ const BorrowedBook = () => {
         <div className='mt-16 w-[90%] mx-auto'>
 
             {
-                borrowedBooks?.length ?
-                    <div className='flex flex-wrap justify-center items-center gap-6'>
-
-                        {borrowedBooks?.map(book => <BorrowedCard
-                            key={book._id}
-                            book={book}
-                            borrowedBooks={borrowedBooks}
-                            setBorrowedBooks={setBorrowedBooks}
-                        />)}
-
+                loading ?
+                    <div className="flex h-[70vh] items-center justify-center -mt-10">
+                        <span className="loading loading-spinner w-14 text-title-primary"></span>
                     </div>
                     :
 
-                    <div className='flex items-center flex-col'>
-                        <img src={empty} className='max-h-40' alt="" />
-                        <h2 className='capitalize font-bold text-3xl text-bg-secondary italic text-center'>
-                            No Borrowed Books
-                        </h2>
-                    </div>
+                    borrowedBooks?.length ?
+                        <div className='flex flex-wrap justify-center items-center gap-6'>
+
+                            {borrowedBooks?.map(book => <BorrowedCard
+                                key={book._id}
+                                book={book}
+                                borrowedBooks={borrowedBooks}
+                                setBorrowedBooks={setBorrowedBooks}
+                            />)}
+
+                        </div>
+                        :
+
+                        <div className='flex items-center flex-col'>
+                            <img src={empty} className='max-h-40' alt="" />
+                            <h2 className='capitalize font-bold text-3xl text-bg-secondary italic text-center'>
+                                No Borrowed Books
+                            </h2>
+                        </div>
 
             }
 

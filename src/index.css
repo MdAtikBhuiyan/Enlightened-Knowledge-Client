@@ -46,6 +46,7 @@ body {
 /* navbar */
 .navbar li a {
     border-bottom: 2px solid transparent;
+    font-weight: bold;
     transition: all .3s;
 }
 
