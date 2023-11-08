@@ -3,7 +3,7 @@ import CommonBanner from "../../components/CommonBanner/CommonBanner";
 import { useEffect, useState } from "react";
 import AllBooksCard from "./AllBooksCard";
 import loadingImg from '../../assets/images/loader-animation.gif'
-
+import empty from '../../assets/images/empty.png'
 
 
 const booksTypes = [
@@ -123,7 +123,6 @@ const AllCategoryBook = () => {
     const [loading, setLoading] = useState(true)
 
     // filter and all data get by send query
-
     const [allBooks, setAllBooks] = useState(null)
 
     // for select categories filter
@@ -136,8 +135,10 @@ const AllCategoryBook = () => {
         fetch(`http://localhost:5000/allBooks?category=${category}`)
             .then(res => res.json())
             .then(data => {
-                // console.log(data);
-                setAllBooks(data)
+                // console.log('aaa', data);
+                const availableQuantity = data?.filter(book => book.quantity > 0)
+                // console.log(availableQuantity);
+                setAllBooks(availableQuantity)
                 setLoading(false)
             })
             .catch(err => {
@@ -153,7 +154,14 @@ const AllCategoryBook = () => {
             .then(res => res.json())
             .then(data => {
                 // console.log(data);
-                setAllBooks(data)
+                if (location.pathname == '/allBook') {
+                    // console.log('aaa,', data);
+                    const availableQuantity = data?.filter(book => book.quantity > 0)
+                    setAllBooks(availableQuantity)
+                }
+                else {
+                    setAllBooks(data);
+                }
                 setLoading(false)
             })
             .catch(err => {
@@ -188,6 +196,8 @@ const AllCategoryBook = () => {
             <div className="w-[90%] mx-auto flex flex-wrap justify-center items-center gap-6 mt-16">
 
                 {
+
+
                     loading ?
 
                         <div>
@@ -196,7 +206,14 @@ const AllCategoryBook = () => {
 
                         :
 
-                        allBooks?.map(book => <AllBooksCard key={book._id} book={book} path={location?.pathname} />)
+                        allBooks.length ?
+                            allBooks?.map(book => <AllBooksCard key={book._id} book={book} path={location?.pathname} />)
+                            :
+                            <div className="flex flex-col items-center justify-center">
+                                <img className="w-40" src={empty} alt="" />
+                                <h3 className="text-4xl text-title-primary italic font-bold">Books Coming soon.....</h3>
+                            </div>
+
                 }
 
             </div>

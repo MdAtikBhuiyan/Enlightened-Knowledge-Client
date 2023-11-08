@@ -1,14 +1,14 @@
 import { useContext, useRef, useState } from "react";
 import { FaRegStar, FaStar } from "react-icons/fa";
 import Rating from "react-rating";
-import { useLoaderData } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProvider";
 import Swal from "sweetalert2";
 
 const DetailSingleBook = () => {
     const book = useLoaderData()
     // console.log('single', book);
-
+    const { _id, ...restInfo } = book;
 
     const { user } = useContext(AuthContext)
 
@@ -37,7 +37,7 @@ const DetailSingleBook = () => {
         const borrow_date = form.borrow_date.value;
         const return_date = form.return_date.value;
 
-        const borrowData = { userName, userEmail, borrow_date, return_date, bookId: book?._id }
+        const borrowData = { userName, userEmail, borrow_date, return_date, bookId: book?._id, ...restInfo }
 
         // console.log(data);
 
@@ -101,6 +101,8 @@ const DetailSingleBook = () => {
         form.return_date.value = ''
 
     }
+
+
     return (
 
         <section className="w-[90%] mx-auto mt-16">
@@ -129,7 +131,10 @@ const DetailSingleBook = () => {
                         />
 
                         <div className="mt-8 gap-4 flex flex-col sm:flex-row">
-                            <button className="btn bg-bg-primary text-white border-0 h-fit min-h-fit px-4 py-2 md:px-6 md:py-2 font-bold text-base hover:bg-[#58932d] capitalize">Read </button>
+                            <Link to={`/readBook`} state={book}>
+                                <button
+                                    className="btn bg-bg-primary text-white border-0 h-fit min-h-fit px-4 py-2 md:px-6 md:py-2 font-bold text-base hover:bg-[#58932d] capitalize">Read </button>
+                            </Link>
                             <button
                                 // onClick={() => document.getElementById('my_modal_5').showModal()}
                                 onClick={() => modalRef.current.showModal()}

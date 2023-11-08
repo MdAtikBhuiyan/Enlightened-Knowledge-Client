@@ -10,25 +10,28 @@ const BorrowedBook = () => {
     const [borrowedBooks, setBorrowedBooks] = useState(null)
 
     useEffect(() => {
-        fetch()
+        fetch(`http://localhost:5000/borrowBook?email=${user?.email}`)
             .then(res => res.json())
             .then(data => {
                 console.log(data);
                 setBorrowedBooks(data)
             })
+            .catch(err => {
+                console.log(err);
+            })
 
-    }, [])
+    }, [user?.email])
 
     return (
-        <div className='my-16 w-[90%] mx-auto'>
+        <div className='mt-16 w-[90%] mx-auto'>
 
             {
                 borrowedBooks?.length ?
-                    <div className='grid grid-cols-1 md:grid-cols-2 gap-10'>
+                    <div className='flex flex-wrap justify-center items-center gap-6'>
 
-                        {borrowedBooks?.map(product => <BorrowedCard
-                            key={product._id}
-                            product={product}
+                        {borrowedBooks?.map(book => <BorrowedCard
+                            key={book._id}
+                            book={book}
                             borrowedBooks={borrowedBooks}
                             setBorrowedBooks={setBorrowedBooks}
                         />)}
@@ -39,7 +42,7 @@ const BorrowedBook = () => {
                     <div className='flex items-center flex-col'>
                         <img src={empty} className='max-h-40' alt="" />
                         <h2 className='capitalize font-bold text-3xl text-bg-secondary italic text-center'>
-                           No Borrowed Books
+                            No Borrowed Books
                         </h2>
                     </div>
 
