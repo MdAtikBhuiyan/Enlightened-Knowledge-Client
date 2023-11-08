@@ -8,7 +8,7 @@ const CommonBanner = ({ title }) => {
     return (
         <div className="h-[50vh] bg-no-repeat w-full bg-cover bg-center" style={{ backgroundImage: `url(${banner})` }}>
             <div className="h-full flex justify-center items-center">
-                <h2 className="text-bg-secondary text-4xl drop-shadow-sm italic font-bold">{title}</h2>
+                <h2 className="text-bg-secondary text-2xl md:text-4xl drop-shadow-sm italic font-bold">{title}</h2>
             </div>
         </div>
     );
