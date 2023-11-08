@@ -31,7 +31,7 @@ const AddBook = () => {
         const addData = { img, name, quantity, author, category, rating, description }
         // console.log(addData);
 
-        fetch(`https://asn-library-management-server-11.vercel.app/addBooks`, {
+        fetch(`http://localhost:5000/addBooks`, {
             method: "POST",
             headers: {
                 "content-type": "application/json"
@@ -82,7 +82,7 @@ const AddBook = () => {
 
         const updateInfo = { img, name, quantity, author, category, rating, description };
 
-        fetch(`https://asn-library-management-server-11.vercel.app/updateBook/${updateProduct._id}`, {
+        fetch(`http://localhost:5000/updateBook/${updateProduct._id}`, {
             method: "PUT",
             headers: {
                 'content-type': 'application/json'
