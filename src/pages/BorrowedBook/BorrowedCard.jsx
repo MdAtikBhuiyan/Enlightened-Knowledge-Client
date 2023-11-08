@@ -11,7 +11,7 @@ const BorrowedCard = ({ book, borrowedBooks, setBorrowedBooks }) => {
     const [quantityBook, setQuantityBook] = useState(null)
 
     useEffect(() => {
-        fetch(`http://localhost:5000/singleBook/${book?.bookId}`)
+        fetch(`https://asn-library-management-server-11.vercel.app/singleBook/${book?.bookId}`)
             .then(res => res.json())
             .then(data => {
                 // console.log("data single", data);
@@ -26,13 +26,14 @@ const BorrowedCard = ({ book, borrowedBooks, setBorrowedBooks }) => {
     const { _id, borrow_date, return_date, category, name, img } = book;
 
 
+    console.log("quantitytytytytyy", quantityBook, 'book', book)
 
     const handleReturnBook = () => {
         // quantity 
         const bookQuantity = parseInt(quantityBook?.quantity);
         const remaining = bookQuantity + 1;
 
-        fetch(`http://localhost:5000/updateBookQuantity/${quantityBook?._id}`, {
+        fetch(`https://asn-library-management-server-11.vercel.app/updateBookQuantity/${quantityBook?._id}`, {
             method: 'PATCH',
             headers: {
                 "content-type": "application/json"
@@ -46,7 +47,7 @@ const BorrowedCard = ({ book, borrowedBooks, setBorrowedBooks }) => {
                 if (data.modifiedCount > 0) {
 
                     // delete data
-                    fetch(`http://localhost:5000/borrowBook/${_id}`, {
+                    fetch(`https://asn-library-management-server-11.vercel.app/borrowBook/${_id}`, {
                         method: "DELETE"
                     })
                         .then(res => res.json())

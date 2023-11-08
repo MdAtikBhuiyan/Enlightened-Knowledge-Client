@@ -34,7 +34,7 @@ const DetailSingleBook = () => {
 
     const [alreayBorrowed, setAlreadyBorrowed] = useState(null)
     useEffect(() => {
-        fetch(`http://localhost:5000/borrowBook?email=${user?.email}`)
+        fetch(`https://asn-library-management-server-11.vercel.app/borrowBook?email=${user?.email}`)
             .then(res => res.json())
             .then(data => {
                 // console.log("already boroo", data);
@@ -78,7 +78,7 @@ const DetailSingleBook = () => {
         }
         else {
 
-            fetch(`http://localhost:5000/borrowBook`, {
+            fetch(`https://asn-library-management-server-11.vercel.app/borrowBook`, {
                 method: "POST",
                 headers: {
                     "content-type": "application/json"
@@ -92,7 +92,7 @@ const DetailSingleBook = () => {
 
                         // book quantity decrease
                         const remaining = bookQuantity - 1;
-                        fetch(`http://localhost:5000/updateBookQuantity/${book?._id}`, {
+                        fetch(`https://asn-library-management-server-11.vercel.app/updateBookQuantity/${book?._id}`, {
                             method: 'PATCH',
                             headers: {
                                 "content-type": "application/json"

@@ -57,7 +57,7 @@ const router = createBrowserRouter([
                 element: <PrivateRoute>
                     <DetailSingleBook />
                 </PrivateRoute>,
-                loader: ({ params }) => fetch(`http://localhost:5000/singleBook/${params.id}`)
+                loader: ({ params }) => fetch(`https://asn-library-management-server-11.vercel.app/singleBook/${params.id}`)
             },
             {
                 path: '/borrowedBook',

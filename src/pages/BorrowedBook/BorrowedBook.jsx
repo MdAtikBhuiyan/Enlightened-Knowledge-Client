@@ -12,7 +12,7 @@ const BorrowedBook = () => {
     const [borrowedBooks, setBorrowedBooks] = useState(null)
 
     useEffect(() => {
-        fetch(`http://localhost:5000/borrowBook?email=${user?.email}`)
+        fetch(`https://asn-library-management-server-11.vercel.app/borrowBook?email=${user?.email}`)
             .then(res => res.json())
             .then(data => {
                 // console.log(data);
