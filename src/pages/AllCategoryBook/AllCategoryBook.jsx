@@ -149,7 +149,7 @@ const AllCategoryBook = () => {
     useEffect(() => {
         setLoading(true)
         const category = location.pathname == '/allBook' ? '' : location.pathname.split('/')[2];
-        // console.log('cat', category);
+        console.log('cat', category);
         fetch(`https://asn-library-management-server-11.vercel.app/allBooks?category=${category}`)
             .then(res => res.json())
             .then(data => {

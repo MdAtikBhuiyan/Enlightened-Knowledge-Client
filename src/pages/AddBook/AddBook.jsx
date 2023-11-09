@@ -4,6 +4,7 @@ import logo from '../../assets/images/logo.png';
 import Swal from 'sweetalert2';
 import { useEffect, useState } from 'react';
 import addImg from '../../assets/images/addData.png'
+import { toast } from 'react-toastify';
 
 const AddBook = () => {
 
@@ -24,46 +25,54 @@ const AddBook = () => {
         const name = form.name.value;
         const quantity = form.quantity.value;
         const author = form.author.value;
-        const category = form.category.value;
+        const category = form.category.value.toLowerCase();
         const rating = form.rating.value;
         const description = form.description.value;
 
-        const addData = { img, name, quantity, author, category, rating, description }
+        // const addData = { img, name, quantity, author, category, rating, description }
         // console.log(addData);
 
-        fetch(`https://asn-library-management-server-11.vercel.app/addBooks`, {
-            method: "POST",
-            headers: {
-                "content-type": "application/json"
-            },
-            body: JSON.stringify(addData)
-        })
-            .then(res => res.json())
-            .then(data => {
-                // console.log(data);
-                if (data.insertedId) {
+        if (quantity >= 0) {
+
+            const addData = { img, name, quantity, author, category, rating, description }
+
+            fetch(`https://asn-library-management-server-11.vercel.app/addBooks`, {
+                method: "POST",
+                headers: {
+                    "content-type": "application/json"
+                },
+                body: JSON.stringify(addData)
+            })
+                .then(res => res.json())
+                .then(data => {
+                    // console.log(data);
+                    if (data.insertedId) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Book added successfully',
+                            text: "Do you want to continue",
+                            confirmButtonText: "Yes"
+                            // showConfirmButton: false,
+                            // timer: 2000
+                        })
+                    }
+                    // form clear
+                    form.reset()
+                })
+                .catch(err => {
                     Swal.fire({
-                        icon: 'success',
-                        title: 'Book added successfully',
-                        text: "Do you want to continue",
-                        confirmButtonText: "Yes"
+                        icon: 'error',
+                        title: 'Opps... Failed !!',
+                        text: `${err.message}`,
+                        confirmButtonText: "Continue"
                         // showConfirmButton: false,
                         // timer: 2000
                     })
-                }
-                // form clear
-                form.reset()
-            })
-            .catch(err => {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Opps... Failed !!',
-                    text: `${err.message}`,
-                    confirmButtonText: "Continue"
-                    // showConfirmButton: false,
-                    // timer: 2000
                 })
-            })
+        }
+        else {
+            toast.error("Quantity can't be negative")
+        }
 
     }
 
@@ -76,42 +85,51 @@ const AddBook = () => {
         const name = form.name.value;
         const quantity = form.quantity.value;
         const author = form.author.value;
-        const category = form.category.value;
+        const category = form.category.value.toLowerCase();
         const rating = form.rating.value;
         const description = form.description.value;
 
-        const updateInfo = { img, name, quantity, author, category, rating, description };
+        // const updateInfo = { img, name, quantity, author, category, rating, description };
 
-        fetch(`https://asn-library-management-server-11.vercel.app/updateBook/${updateProduct._id}`, {
-            method: "PUT",
-            headers: {
-                'content-type': 'application/json'
-            },
-            body: JSON.stringify(updateInfo)
-        })
-            .then(res => res.json())
-            .then(data => {
-                if (data.modifiedCount) {
+        if (quantity >= 0) {
+
+            const updateInfo = { img, name, quantity, author, category, rating, description };
+
+            fetch(`https://asn-library-management-server-11.vercel.app/updateBook/${updateProduct._id}`, {
+                method: "PUT",
+                headers: {
+                    'content-type': 'application/json'
+                },
+                body: JSON.stringify(updateInfo)
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.modifiedCount) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Book updated successfully',
+                            text: "Do you want to continue",
+                            confirmButtonText: "Yes"
+                            // showConfirmButton: false,
+                            // timer: 2000
+                        })
+                    }
+                })
+                .catch(err => {
                     Swal.fire({
-                        icon: 'success',
-                        title: 'Book updated successfully',
-                        text: "Do you want to continue",
-                        confirmButtonText: "Yes"
+                        icon: 'error',
+                        title: 'Opps... Failed !!',
+                        text: `${err.message}`,
+                        confirmButtonText: "Continue"
                         // showConfirmButton: false,
                         // timer: 2000
                     })
-                }
-            })
-            .catch(err => {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Opps... Failed !!',
-                    text: `${err.message}`,
-                    confirmButtonText: "Continue"
-                    // showConfirmButton: false,
-                    // timer: 2000
                 })
-            })
+        }
+        else {
+            toast.error("Quantity can't be negative")
+        }
+
 
     }
 

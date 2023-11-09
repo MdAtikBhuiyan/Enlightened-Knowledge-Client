@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom';
 const booksTypes = [
     {
         id: 1,
-       category: 'Fiction',
+        category: 'Fiction',
         image: frictionImg,
         banner: [
             {
@@ -30,7 +30,7 @@ const booksTypes = [
     },
     {
         id: 2,
-       category: 'thriller',
+        category: 'thriller',
         image: thrillerImg,
         banner: [
             {
@@ -50,7 +50,7 @@ const booksTypes = [
     },
     {
         id: 3,
-       category: 'romance',
+        category: 'romance',
         image: romanceImg,
         banner: [
             {
@@ -69,7 +69,7 @@ const booksTypes = [
     },
     {
         id: 4,
-       category: 'history',
+        category: 'history',
         image: historyImg,
         banner: [
             {
@@ -89,13 +89,13 @@ const booksTypes = [
     },
     {
         id: 5,
-       category: 'comedy',
+        category: 'comedy',
         image: comedyImg,
         banner: []
     },
     {
         id: 6,
-       category: 'horror',
+        category: 'horror',
         image: horrorImg,
         banner: [
             {
