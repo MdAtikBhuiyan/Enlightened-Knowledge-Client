@@ -28,7 +28,7 @@ const booksTypes = [
     },
     {
         id: 2,
-        title: 'thriller',
+        title: 'Thriller',
 
         banner: [
             {
@@ -48,7 +48,7 @@ const booksTypes = [
     },
     {
         id: 3,
-        title: 'romance',
+        title: 'Romance',
 
         banner: [
             {
@@ -67,7 +67,7 @@ const booksTypes = [
     },
     {
         id: 4,
-        title: 'history',
+        title: 'History',
 
         banner: [
             {
@@ -87,13 +87,13 @@ const booksTypes = [
     },
     {
         id: 5,
-        title: 'comedy',
+        title: 'Comedy',
 
         banner: []
     },
     {
         id: 6,
-        title: 'horror',
+        title: 'Horror',
 
         banner: [
             {
