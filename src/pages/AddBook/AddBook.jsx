@@ -32,7 +32,7 @@ const AddBook = () => {
         // const addData = { img, name, quantity, author, category, rating, description }
         // console.log(addData);
 
-        if (quantity >= 0) {
+        if (quantity >= 0 && rating >= 0) {
 
             const addData = { img, name, quantity, author, category, rating, description }
 
@@ -70,8 +70,11 @@ const AddBook = () => {
                     })
                 })
         }
-        else {
-            toast.error("Quantity can't be negative")
+        else if(quantity < 0) {
+            toast.error("Quantity can't be negative number")
+        }
+        else{
+            toast.error("Rating can't be negative number")
         }
 
     }
@@ -91,9 +94,9 @@ const AddBook = () => {
 
         // const updateInfo = { img, name, quantity, author, category, rating, description };
 
-        if (quantity >= 0) {
+        if (quantity >= 0 && rating >= 0) {
 
-            const updateInfo = { img, name, quantity, author, category, rating, description };
+            const updateInfo = { img, name, quantity, author, category: category, rating, description };
 
             fetch(`https://asn-library-management-server-11.vercel.app/updateBook/${updateProduct._id}`, {
                 method: "PUT",
@@ -126,8 +129,11 @@ const AddBook = () => {
                     })
                 })
         }
-        else {
-            toast.error("Quantity can't be negative")
+        else if(quantity < 0) {
+            toast.error("Quantity can't be negative number")
+        }
+        else{
+            toast.error("Rating can't be negative number")
         }
 
 
@@ -234,7 +240,7 @@ const AddBook = () => {
                                 </label>
                                 <input
                                     name="rating"
-                                    type="text"
+                                    type="number"
                                     required
                                     defaultValue={updateProduct?.rating}
                                     placeholder="rating"
