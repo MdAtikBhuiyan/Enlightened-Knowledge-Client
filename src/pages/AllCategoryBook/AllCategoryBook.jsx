@@ -1,9 +1,10 @@
 import { useLocation } from "react-router-dom";
 import CommonBanner from "../../components/CommonBanner/CommonBanner";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import AllBooksCard from "./AllBooksCard";
 import loadingImg from '../../assets/images/loader-animation.gif'
 import empty from '../../assets/images/empty.png'
+import { AuthContext } from "../../providers/AuthProvider";
 
 
 const booksTypes = [
@@ -115,6 +116,7 @@ const booksTypes = [
 const AllCategoryBook = () => {
 
     const location = useLocation();
+    const { user } = useContext(AuthContext);
 
     // for common banner title 
     const pathName = `home${location.pathname}`
@@ -132,7 +134,7 @@ const AllCategoryBook = () => {
 
         const category = e.target?.value.toLowerCase();
         console.log('select', category);
-        fetch(`https://asn-library-management-server-11.vercel.app/allBooks?category=${category}`)
+        fetch(`https://asn-library-management-server-11.vercel.app/allBooks?category=${category}&email=${user?.email}`, { credentials: 'include' })
             .then(res => res.json())
             .then(data => {
                 // console.log('aaa', data);
@@ -150,7 +152,7 @@ const AllCategoryBook = () => {
         setLoading(true)
         const category = location.pathname == '/allBook' ? '' : location.pathname.split('/')[2];
         console.log('cat', category);
-        fetch(`https://asn-library-management-server-11.vercel.app/allBooks?category=${category}`)
+        fetch(`https://asn-library-management-server-11.vercel.app/allBooks?category=${category}&email=${user?.email}`, { credentials: 'include' })
             .then(res => res.json())
             .then(data => {
                 // console.log(data);

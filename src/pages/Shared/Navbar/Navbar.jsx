@@ -39,6 +39,7 @@ const Navbar = () => {
         logOut()
             .then(() => {
                 toast.success("Log out successfull")
+                // location.reload()
             })
             .catch(err => {
                 toast.error("Logout failed", err.message)

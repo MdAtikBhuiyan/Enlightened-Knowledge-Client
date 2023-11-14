@@ -26,7 +26,7 @@ const BorrowedCard = ({ book, borrowedBooks, setBorrowedBooks }) => {
     const { _id, borrow_date, return_date, category, name, img } = book;
 
 
-    console.log("quantitytytytytyy", quantityBook, 'book', book)
+    // console.log("quantitytytytytyy", quantityBook, 'book', book)
 
     const handleReturnBook = () => {
         // quantity 

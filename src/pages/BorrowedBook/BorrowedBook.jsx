@@ -25,6 +25,19 @@ const BorrowedBook = () => {
 
     }, [user?.email])
 
+
+    // // jwt token
+    // useEffect(() => {
+    //     const url = 'https://asn-library-management-server-11.vercel.app/jwt'
+
+    //     fetch(url, { credentials: 'include' })
+    //         .then(res => res.json())
+    //         .then(data => {
+    //             console.log(data);
+    //         })
+
+    // }, [])
+
     return (
         <div className='mt-16 w-[90%] mx-auto'>
 

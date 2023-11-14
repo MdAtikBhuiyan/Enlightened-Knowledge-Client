@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import app from "../firebase/firebase.config";
 import { GoogleAuthProvider, createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
+import axios from "axios";
 
 
 export const AuthContext = createContext(null);
@@ -39,9 +40,46 @@ const AuthProvider = ({ children }) => {
     // user observe and set an state
     useEffect(() => {
         const unSubscribe = onAuthStateChanged(auth, currentUser => {
-            console.log(currentUser);
-            setUser(currentUser);
-            setLoading(false)
+
+            // for using pass to jwt server
+            const userEmail = currentUser?.email || user?.email;
+            const loggedUser = { email: userEmail };
+
+            console.log("observe user", currentUser);
+            // setUser(currentUser);
+            // setLoading(false)
+
+            if (currentUser) {
+                fetch('https://asn-library-management-server-11.vercel.app/jwt', {
+                    credentials: 'include',
+                    method: 'POST',
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    body: JSON.stringify(loggedUser)
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        console.log('jwt token response', data);
+                        setUser(currentUser);
+                        setLoading(false)
+                    })
+                    .catch(err => {
+                        console.log("jwt token err", err);
+                    })
+            }
+            else {
+
+                setUser(currentUser);
+                setLoading(false)
+
+                // jwt token wiil be clear if user logout / user value is null
+                axios.post('https://asn-library-management-server-11.vercel.app/logout', loggedUser, { withCredentials: true })
+                    .then(res => {
+                        console.log("jwt logout", res.data);
+                    })
+            }
+
         })
         return () => unSubscribe()
     }, [])

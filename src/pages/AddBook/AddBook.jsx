@@ -2,13 +2,15 @@
 import { useLocation } from 'react-router-dom';
 import logo from '../../assets/images/logo.png';
 import Swal from 'sweetalert2';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import addImg from '../../assets/images/addData.png'
 import { toast } from 'react-toastify';
+import { AuthContext } from '../../providers/AuthProvider';
 
 const AddBook = () => {
 
-    const { state } = useLocation()
+    const { state } = useLocation();
+    const { user } = useContext(AuthContext)
 
     const [updateProduct, setUpdateProduct] = useState(null)
     useEffect(() => {
@@ -36,8 +38,9 @@ const AddBook = () => {
 
             const addData = { img, name, quantity, author, category, rating, description }
 
-            fetch(`https://asn-library-management-server-11.vercel.app/addBooks`, {
+            fetch(`https://asn-library-management-server-11.vercel.app/addBooks?email=${user.email}`, {
                 method: "POST",
+                credentials: 'include',
                 headers: {
                     "content-type": "application/json"
                 },
@@ -70,10 +73,10 @@ const AddBook = () => {
                     })
                 })
         }
-        else if(quantity < 0) {
+        else if (quantity < 0) {
             toast.error("Quantity can't be negative number")
         }
-        else{
+        else {
             toast.error("Rating can't be negative number")
         }
 
@@ -129,10 +132,10 @@ const AddBook = () => {
                     })
                 })
         }
-        else if(quantity < 0) {
+        else if (quantity < 0) {
             toast.error("Quantity can't be negative number")
         }
-        else{
+        else {
             toast.error("Rating can't be negative number")
         }
 
