@@ -8,6 +8,10 @@
 https://asn-library-management-11.web.app/
 
 
+## Server side code Link
+https://github.com/MdAtikBhuiyan/Enlightened-Knowledge-Server
+
+
 ## Key Features:
 
 - Enlightened knowledge is a library management based website
@@ -21,3 +25,12 @@ https://asn-library-management-11.web.app/
 - user can return their borrowed books and its update book quantity
 - User can also login by using google and email , password.
 - there has some validation of password for more
+
+
+## Technology Used:
+- Firebase authentication
+- React JS
+- Node JS
+- Express JS
+- Mongo DB
+- Tailwind
