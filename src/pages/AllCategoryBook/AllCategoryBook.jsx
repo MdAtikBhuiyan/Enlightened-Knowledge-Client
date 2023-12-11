@@ -119,7 +119,7 @@ const AllCategoryBook = () => {
     const { user } = useContext(AuthContext);
 
     // for common banner title 
-    const pathName = `home${location.pathname}`
+    const pathName = `home${location?.pathname}`
     let title = location.pathname == '/allBook' ? "Explore our all books" : pathName;
 
     const [loading, setLoading] = useState(true)
@@ -169,7 +169,7 @@ const AllCategoryBook = () => {
             .catch(err => {
                 console.log(err);
             })
-    }, [location.pathname])
+    }, [location.pathname, user?.email])
 
 
     return (

@@ -60,7 +60,7 @@ const Navbar = () => {
                     </div>
                     <div className="font-title text-xl md:text-2xl text-title-color font-bold w-full">
                         <Link to='/'>
-                            <img className="hidden md:block w-1/6 object-cover" src={logo} alt="" />
+                            <img className="hidden md:block w-[10%] object-cover" src={logo} alt="" />
                             <h2 className="text-lg text-white md:hidden">Enlightened </h2>
                         </Link>
                     </div>

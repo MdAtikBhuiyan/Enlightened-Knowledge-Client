@@ -130,7 +130,7 @@ const BookCategory = () => {
             </div >
             <div className='flex flex-wrap gap-4 md:gap-8 justify-center items-center my-10'>
                 {
-                    booksTypes.map(type => (
+                    booksTypes?.map(type => (
                         <div
                             onClick={() => handleCategoryClick(type)}
                             className='border shadow-md text-center group cursor-pointer' key={type.id}>

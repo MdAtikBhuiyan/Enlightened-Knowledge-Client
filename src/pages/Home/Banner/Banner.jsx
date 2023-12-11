@@ -1,6 +1,6 @@
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, Pagination, Navigation } from 'swiper/modules';
+import { Autoplay, Navigation } from 'swiper/modules';
 
 // Import Swiper styles
 import 'swiper/css';
@@ -30,7 +30,7 @@ const Banner = ({ banners }) => {
             >
 
                 {
-                    banners.map((banner) => (
+                    banners?.map((banner) => (
                         <SwiperSlide key={banner.id}>
                             <BannerSlide bannerInfo={banner} />
                         </SwiperSlide>

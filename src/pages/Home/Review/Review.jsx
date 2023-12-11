@@ -105,15 +105,15 @@ const Review = () => {
                     className="max-h-96"
                 >
                     {
-                        userReviews.map(review => (
-                            <SwiperSlide key={review.id}>
+                        userReviews?.map(review => (
+                            <SwiperSlide key={review?.id}>
                                 <div className="mb-12 md:mb-0 text-center py-8 px-4 xl:py-10 lg:px-6 shadow-lg bg-bg-primary border-b-4 border-t-4 border-transparent hover:border-bg-secondary transition-all">
                                     <div className="mb-6 flex justify-center">
                                         <img
-                                            src={review.userImg}
+                                            src={review?.userImg}
                                             className="w-24 h-24 object-cover rounded-full shadow-lg dark:shadow-black/30" />
                                     </div>
-                                    <h5 className="mb-4 text-xl md:text-2xl font-bold text-white font-title">{review.userName}</h5>
+                                    <h5 className="mb-4 text-xl md:text-2xl font-bold text-white font-title">{review?.userName}</h5>
 
                                     <p className="mb-4 mx-auto text-[#ffffffef] text-sm">
                                         <svg
@@ -124,14 +124,14 @@ const Review = () => {
                                             <path
                                                 d="M13 14.725c0-5.141 3.892-10.519 10-11.725l.984 2.126c-2.215.835-4.163 3.742-4.38 5.746 2.491.392 4.396 2.547 4.396 5.149 0 3.182-2.584 4.979-5.199 4.979-3.015 0-5.801-2.305-5.801-6.275zm-13 0c0-5.141 3.892-10.519 10-11.725l.984 2.126c-2.215.835-4.163 3.742-4.38 5.746 2.491.392 4.396 2.547 4.396 5.149 0 3.182-2.584 4.979-5.199 4.979-3.015 0-5.801-2.305-5.801-6.275z" />
                                         </svg>
-                                        {review.reviewText.slice(0,120)}...
+                                        {review?.reviewText?.slice(0,120)}...
                                     </p>
                                     <Rating
                                         className='text-bg-secondary text-lg'
                                         emptySymbol={<FaRegStar />}
                                         fullSymbol={<FaStar />}
                                         fractions={2}
-                                        initialRating={review.rating}
+                                        initialRating={review?.rating}
                                         readonly
                                     />
                                 </div>
